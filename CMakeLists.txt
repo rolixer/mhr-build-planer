@@ -23,7 +23,7 @@ if(CMKR_ROOT_PROJECT)
 	configure_file(cmake.toml cmake.toml COPYONLY)
 endif()
 
-project(imgui_template)
+project(mhr-build-planner)
 
 include(FetchContent)
 
@@ -103,33 +103,64 @@ target_link_libraries(imgui PUBLIC
 
 unset(CMKR_TARGET)
 unset(CMKR_SOURCES)
-# Target example
-set(CMKR_TARGET example)
-set(example_SOURCES "")
+# Target mhr-bp-lib
+set(CMKR_TARGET mhr-bp-lib)
+set(mhr-bp-lib_SOURCES "")
 
-list(APPEND example_SOURCES
-	"src/main.cpp"
+list(APPEND mhr-bp-lib_SOURCES
+	"src/lib/main.cpp"
 )
 
-list(APPEND example_SOURCES
+list(APPEND mhr-bp-lib_SOURCES
 	cmake.toml
 )
 
-set(CMKR_SOURCES ${example_SOURCES})
-add_executable(example)
+set(CMKR_SOURCES ${mhr-bp-lib_SOURCES})
+add_library(mhr-bp-lib STATIC)
 
-if(example_SOURCES)
-	target_sources(example PRIVATE ${example_SOURCES})
+if(mhr-bp-lib_SOURCES)
+	target_sources(mhr-bp-lib PRIVATE ${mhr-bp-lib_SOURCES})
+endif()
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${mhr-bp-lib_SOURCES})
+
+target_compile_features(mhr-bp-lib PUBLIC
+	cxx_std_11
+)
+
+target_include_directories(mhr-bp-lib PUBLIC
+	"src/lib"
+)
+
+unset(CMKR_TARGET)
+unset(CMKR_SOURCES)
+# Target mhr-bp-app
+set(CMKR_TARGET mhr-bp-app)
+set(mhr-bp-app_SOURCES "")
+
+list(APPEND mhr-bp-app_SOURCES
+	"src/app/main.cpp"
+)
+
+list(APPEND mhr-bp-app_SOURCES
+	cmake.toml
+)
+
+set(CMKR_SOURCES ${mhr-bp-app_SOURCES})
+add_executable(mhr-bp-app)
+
+if(mhr-bp-app_SOURCES)
+	target_sources(mhr-bp-app PRIVATE ${mhr-bp-app_SOURCES})
 endif()
 
 get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
 if(NOT CMKR_VS_STARTUP_PROJECT)
-	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT example)
+	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT mhr-bp-app)
 endif()
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${example_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${mhr-bp-app_SOURCES})
 
-target_link_libraries(example PRIVATE
+target_link_libraries(mhr-bp-app PRIVATE
 	imgui
 )
 

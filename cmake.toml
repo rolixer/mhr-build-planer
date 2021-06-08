@@ -3,7 +3,7 @@ version = "3.15"
 cmkr-include = "cmake/cmkr.cmake"
 
 [project]
-name = "imgui_template"
+name = "mhr-build-planner"
 
 # See https://github.com/microsoft/vcpkg#getting-started on how to use vcpkg
 # Chose a version from https://github.com/microsoft/vcpkg/releases
@@ -31,7 +31,13 @@ include-directories = ["third_party/imgui"]
 link-libraries = ["glfw", "GLEW::GLEW"]
 compile-features = ["cxx_std_11"]
 
-[target.example]
+[target.mhr-bp-lib]
+type = "static"
+sources = ["src/lib/mhrbp.cpp"]
+include-directories = ["src/lib"]
+compile-features = ["cxx_std_11"]
+
+[target.mhr-bp-app]
 type = "executable"
-sources = ["src/main.cpp"]
+sources = ["src/app/main.cpp"]
 link-libraries = ["imgui"]
