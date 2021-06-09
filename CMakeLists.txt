@@ -103,33 +103,34 @@ target_link_libraries(imgui PUBLIC
 
 unset(CMKR_TARGET)
 unset(CMKR_SOURCES)
-# Target mhr-bp-lib
-set(CMKR_TARGET mhr-bp-lib)
-set(mhr-bp-lib_SOURCES "")
+# Target mhrbp
+set(CMKR_TARGET mhrbp)
+set(mhrbp_SOURCES "")
 
-list(APPEND mhr-bp-lib_SOURCES
-	"src/lib/main.cpp"
+list(APPEND mhrbp_SOURCES
+	"lib/mhrbp.cpp"
+	"lib/mhrbp.h"
 )
 
-list(APPEND mhr-bp-lib_SOURCES
+list(APPEND mhrbp_SOURCES
 	cmake.toml
 )
 
-set(CMKR_SOURCES ${mhr-bp-lib_SOURCES})
-add_library(mhr-bp-lib STATIC)
+set(CMKR_SOURCES ${mhrbp_SOURCES})
+add_library(mhrbp STATIC)
 
-if(mhr-bp-lib_SOURCES)
-	target_sources(mhr-bp-lib PRIVATE ${mhr-bp-lib_SOURCES})
+if(mhrbp_SOURCES)
+	target_sources(mhrbp PRIVATE ${mhrbp_SOURCES})
 endif()
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${mhr-bp-lib_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${mhrbp_SOURCES})
 
-target_compile_features(mhr-bp-lib PUBLIC
+target_compile_features(mhrbp PUBLIC
 	cxx_std_11
 )
 
-target_include_directories(mhr-bp-lib PUBLIC
-	"src/lib"
+target_include_directories(mhrbp PUBLIC
+	lib
 )
 
 unset(CMKR_TARGET)
@@ -139,7 +140,7 @@ set(CMKR_TARGET mhr-bp-app)
 set(mhr-bp-app_SOURCES "")
 
 list(APPEND mhr-bp-app_SOURCES
-	"src/app/main.cpp"
+	"src/main.cpp"
 )
 
 list(APPEND mhr-bp-app_SOURCES
@@ -162,6 +163,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${mhr-bp-app_SOURCES})
 
 target_link_libraries(mhr-bp-app PRIVATE
 	imgui
+	mhrbp
 )
 
 unset(CMKR_TARGET)

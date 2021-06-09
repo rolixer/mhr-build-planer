@@ -9,6 +9,8 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <mhrbp.h>
+
 static void error_callback(int error, const char *description) {
     fprintf(stderr, "Error %d: %s\n", error, description);
 }
@@ -58,6 +60,13 @@ int main(int, char **) {
 
         // Show demo window
         ImGui::ShowDemoWindow();
+
+        if (!ImGui::Begin("planner"))
+            ImGui::End();
+
+        ImGui::Text("%s", MHRBP::helloWorld().c_str());
+
+        ImGui::End();
 
         // Render dear imgui into screen
         ImGui::Render();

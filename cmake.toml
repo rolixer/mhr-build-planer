@@ -31,13 +31,16 @@ include-directories = ["third_party/imgui"]
 link-libraries = ["glfw", "GLEW::GLEW"]
 compile-features = ["cxx_std_11"]
 
-[target.mhr-bp-lib]
+[target.mhrbp]
 type = "static"
-sources = ["src/lib/mhrbp.cpp"]
-include-directories = ["src/lib"]
+sources = [
+    "lib/*.cpp",
+    "lib/*.h"
+]
+include-directories = ["lib"]
 compile-features = ["cxx_std_11"]
 
 [target.mhr-bp-app]
 type = "executable"
-sources = ["src/app/main.cpp"]
-link-libraries = ["imgui"]
+sources = ["src/main.cpp"]
+link-libraries = ["imgui", "mhrbp"]
