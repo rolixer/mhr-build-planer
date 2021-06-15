@@ -10,12 +10,13 @@ name = "mhr-build-planner"
 # During CMake configuration you will be told how to find and link to the packages
 [vcpkg]
 version = "2021.05.12"
-packages = ["glfw3", "GLEW"]
+packages = ["glfw3", "GLEW", "sqlite-orm"]
 
 # vcpkg will download the packages, but you still need to find them to use them
 [find-package]
 glfw3 = {}
 GLEW = {}
+SqliteOrm = {}
 
 [target.imgui]
 type = "static"
@@ -38,6 +39,7 @@ sources = [
     "lib/*.h"
 ]
 include-directories = ["lib"]
+link-libraries = ["sqlite_orm::sqlite_orm"]
 compile-features = ["cxx_std_11"]
 
 [target.mhr-bp-app]

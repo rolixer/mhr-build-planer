@@ -46,12 +46,15 @@ pmm(
 		REQUIRES
 			glfw3
 			GLEW
+			sqlite-orm
 )
 
 # Packages
 find_package(glfw3 REQUIRED CONFIG)
 
 find_package(GLEW REQUIRED CONFIG)
+
+find_package(SqliteOrm REQUIRED CONFIG)
 
 # Target imgui
 set(CMKR_TARGET imgui)
@@ -131,6 +134,10 @@ target_compile_features(mhrbp PUBLIC
 
 target_include_directories(mhrbp PUBLIC
 	lib
+)
+
+target_link_libraries(mhrbp PUBLIC
+	sqlite_orm::sqlite_orm
 )
 
 unset(CMKR_TARGET)
